@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Artist;
+use App\Playlist;
+use App\Video;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -14,8 +17,54 @@ class ApiController extends Controller
     public function index()
     {
         //
+        dd('this is api ');
+    }
+    
+    
+    public function getVideosByPlaylist($playlistid)
+    {
+        //
+        $data = Video::where('playlistid', $playlistid)->get();
+        // dd($data);
+
+
+        return $data->toJson(JSON_PRETTY_PRINT);
+       
     }
 
+    public function getAllPlaylist()
+    {
+        //
+        $data = Playlist::all();
+        // dd($data);
+
+
+        return $data->toJson(JSON_PRETTY_PRINT);
+       
+    }
+
+
+    public function getAllArtist()
+    {
+        //
+        $data = Artist::all();
+        // dd($data);
+
+
+        return $data->toJson(JSON_PRETTY_PRINT);
+       
+    }
+
+    public function getArtistbyCountry($id)
+    {
+        //
+        $data = Artist::where('country', $id)->get();
+        // dd($data);
+
+
+        return $data->toJson(JSON_PRETTY_PRINT);
+       
+    }
     /**
      * Show the form for creating a new resource.
      *

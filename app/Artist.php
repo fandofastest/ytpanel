@@ -4,15 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class Artist extends Model
 {
     //
     protected $fillable = [
-        'id',
-        'videoid',
-        'title',
+        'name',
+        'channelid',
+        'country',
         'description',
-        'playlistid',
-        'duration',
+        'thumbnails',
+
+
     ];
 }

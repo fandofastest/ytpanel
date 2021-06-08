@@ -36,6 +36,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('video/destroy/{id}', 'VideoController@destroy')->name('video.destroy');
 	Route::get('playlist/detail/{id}', 'PlaylistController@show')->name('playlist.detail');
 	Route::get('playlist/destroy/{id}', 'PlaylistController@destroy')->name('playlist.destroy');
+	//artist
+	Route::get('artist', 'ArtistController@index')->name('artist.index');
+	Route::get('artist/add', 'ArtistController@add')->name('artist.add');
+	Route::post('artist', 'ArtistController@store')->name('artist.store');
+	Route::get('artist/destroy/{id}', 'ArtistController@destroy')->name('artist.destroy');
+
+
+
+
+
+
 });
 
 Route::group(['middleware' => 'auth'], function () {

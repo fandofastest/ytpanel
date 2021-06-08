@@ -31,6 +31,9 @@
                     Thumbnail
                   </th>
                   <th>
+                    Duration
+                  </th>
+                  <th>
                     Create
                   </th>
                   <th>
@@ -55,6 +58,9 @@
                     
                     <td>
                       <img src="150" alt="blank" sizes="150" srcset="https://i.ytimg.com/vi/{{$datas->videoid}}/default.jpg">
+                    </td>
+                    <td>
+                      {{$datas->duration }}
                     </td>
                     <td>
                     {{$datas->created_at}}
