@@ -80,6 +80,7 @@ class VideoController extends Controller
         $response = Http::get($url);
         $responseBody = json_decode($response->getBody());
         $video = new Video();
+        $video->type=$request->type;
 
         //  dd($responseBody->items);       
 
@@ -101,7 +102,14 @@ class VideoController extends Controller
 
         // $playlist = Video::create($request->all());
 
-        return redirect()->route('playlist.detail',$request->playlistid);
+        if ($request->type=='playlist') {
+            return redirect()->route('playlist.detail',$request->playlistid);
+            # code...
+        }
+
+        else {
+            return redirect()->route('genre.detail',$request->playlistid);
+        }
 
     }
 

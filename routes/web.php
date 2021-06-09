@@ -42,6 +42,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('artist', 'ArtistController@store')->name('artist.store');
 	Route::get('artist/destroy/{id}', 'ArtistController@destroy')->name('artist.destroy');
 
+	//genre
+
+	Route::get('genre', 'GenreController@index')->name('genre.index');
+	Route::get('genre/add', 'GenreController@add')->name('genre.add');
+	Route::post('genre', 'GenreController@store')->name('genre.store');
+	Route::get('genre/detail/{id}', 'GenreController@show')->name('genre.detail');
+	Route::get('genre/destroy/{id}', 'GenreController@destroy')->name('genre.destroy');
+
 
 
 

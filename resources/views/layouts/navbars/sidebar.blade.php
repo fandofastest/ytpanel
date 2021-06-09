@@ -68,6 +68,33 @@
           </ul>
         </div>
       </li>
+
+
+
+      <li class="nav-item {{ ($activePage == 'genre' || $activePage == 'user-management') ? ' active' : '' }}">
+        <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
+          <i><img style="width:25px" src="{{ asset('material') }}/img/laravel.svg"></i>
+          <p>{{ __('Genre') }}
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse show" id="laravelExample">
+          <ul class="nav">
+            <li class="nav-item{{ $activePage == 'genreadd' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ route('genre.add') }}">
+                <span class="sidebar-mini"> UP </span>
+                <span class="sidebar-normal">{{ __('Add') }} </span>
+              </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'genre' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ route('genre.index') }}">
+                <span class="sidebar-mini"> UM </span>
+                <span class="sidebar-normal"> {{ __('Lists') }} </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
       
     </ul>
   </div>

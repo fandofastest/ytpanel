@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'playlist', 'titlePage' => __('Playlist Detail')])
+@extends('layouts.app', ['activePage' => 'genre', 'titlePage' => __('Genre Detail')])
 
 @section('content')
 
@@ -9,7 +9,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-            <h4 class="card-title ">{{$playlist->name}}</h4>
+            <h4 class="card-title ">{{$genre->name}}</h4>
             <p class="card-category"> Here is a subtitle for this table</p>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
          Add Videos
@@ -91,7 +91,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add New videos to {{$playlist->name}}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add New videos to {{$genre->name}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -100,8 +100,8 @@
             @csrf
             @method('post')
       <div class="modal-body">
-      <input value="{{$playlist->id}}" type="hidden" name="playlistid">
-      <input value="playlist" type="hidden" name="type">
+      <input value="{{$genre->id}}" type="hidden" name="playlistid">
+      <input value="genre" type="hidden" name="type">
       <input class="form-control" name="videoid" id="input-name" type="text" placeholder="VideoID" value="" required="true" aria-required="true"/>
 
         

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Playlist;
+use App\Genre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PlaylistController extends Controller
+class GenreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,21 +15,23 @@ class PlaylistController extends Controller
      */
     public function index()
     {
-        //
-        $data=Playlist::all();
+        $data=Genre::all();
         // dd($data);
-        return view('pages.playlist', ['data' => $data]);
- 
+        return view('pages.genre', ['data' => $data]);
     }
-    public function add()
-    {
-        return view('pages.playlist_add');
-    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function add()
+    {
+        return view('pages.genre_add');
+        return redirect()->route('genre.index');
+
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -39,39 +41,45 @@ class PlaylistController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $playlist = Playlist::create($request->all());
+        $file = $request->file('file');
+        
+                $tujuan_upload = 'thumbnail';
+                    // upload file
+                $file->move($tujuan_upload,$request->name.'.'.$file->getClientOriginalExtension());
 
-        return redirect()->route('playlist.index');
+                $genre = new Genre();
+                $genre->name=$request->name;
+                $genre->thumbnail=$request->name.'.'.$file->getClientOriginalExtension();
+                $genre->save();
+        
 
-
+                return redirect()->route('genre.index');
+         
+                
+                
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Playlist  $playlist
+     * @param  \App\Genre  $genre
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    
     {
-        $pl = DB::table('playlists')->where('id', $id)->first();
+        $gr = DB::table('genres')->where('id', $id)->first();
         // dd($pl);
-        $data=DB::table('videos')->where('playlistid', $id)->where('type','playlist')->get();
-        return view('pages.playlist_detail', ['playlist' => $pl,'data'=>$data]);
-
-
-        //
+        $data=DB::table('videos')->where('playlistid', $id)->where('type','genre')->get();
+        return view('pages.genre_detail', ['genre' => $gr,'data'=>$data]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Playlist  $playlist
+     * @param  \App\Genre  $genre
      * @return \Illuminate\Http\Response
      */
-    public function edit(Playlist $playlist)
+    public function edit(Genre $genre)
     {
         //
     }
@@ -80,10 +88,10 @@ class PlaylistController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Playlist  $playlist
+     * @param  \App\Genre  $genre
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Playlist $playlist)
+    public function update(Request $request, Genre $genre)
     {
         //
     }
@@ -91,13 +99,12 @@ class PlaylistController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Playlist  $playlist
+     * @param  \App\Genre  $genre
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
-        $post = Playlist::find($id); 
+        $post = Genre::find($id); 
         $post->delete();
 
       return  redirect()->back();
