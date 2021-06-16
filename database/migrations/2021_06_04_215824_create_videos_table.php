@@ -20,6 +20,8 @@ class CreateVideosTable extends Migration
             $table->longText('description');
             $table->string('playlistid');
             $table->string('duration');
+            $table->string('views');
+            $table->string('channelname');
             $table->string('type');
             $table->timestamps();
         });

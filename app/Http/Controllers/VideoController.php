@@ -88,6 +88,8 @@ class VideoController extends Controller
             // dd($data->snippet->title);
             $video->title=$data->snippet->title;    
             $video->description=$data->snippet->description;    
+            $video->views=$data->statistics->viewCount;    
+            $video->channelname=$data->snippet->channelTitle;    
             $video->duration=$this->covtime($data->contentDetails->duration);;    
 
              # code...

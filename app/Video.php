@@ -14,6 +14,8 @@ class Video extends Model
         'description',
         'playlistid',
         'duration',
+        'views',
+        'channelname',
         'type',
     ];
 }

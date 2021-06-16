@@ -15,9 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'ApiController@index')->name('api.index');
+Route::get('/all', 'ApiController@all')->name('api.all');
 Route::get('playlist/', 'ApiController@getAllPlaylist')->name('api.playlistall');
 Route::get('playlist/{id}', 'ApiController@getVideosByPlaylist')->name('api.playlist');
 Route::get('artist/', 'ApiController@getAllArtist')->name('api.artist');
 Route::get('artistcountry/{id}', 'ApiController@getArtistbyCountry')->name('api.artistcountry');
+Route::get('genre/', 'ApiController@getAllGenre')->name('api.genre');
+Route::get('genre/{id}', 'ApiController@getVideosByGenre')->name('api.genredetail');
 
 

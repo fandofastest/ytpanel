@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Artist;
+use App\Genre;
 use App\Playlist;
 use App\Video;
 use Illuminate\Http\Request;
@@ -19,16 +20,45 @@ class ApiController extends Controller
         //
         dd('this is api ');
     }
+    public function all()
+    {
+        //
+        $data=Video::all();
+
+        $respons['name']='allvideos';
+        $respons['data']=$data;
+
+        return json_encode($respons);
+    }
     
     
     public function getVideosByPlaylist($playlistid)
     {
         //
-        $data = Video::where('playlistid', $playlistid)->get();
+        $data = Video::where('playlistid', $playlistid)->where('type','playlist')->get();
+        $name = Playlist::where('id', $playlistid)->first();
         // dd($data);
 
+       
+        $respons['name']=$name->name;
+        $respons['data']=$data;
 
-        return $data->toJson(JSON_PRETTY_PRINT);
+        return json_encode($respons);
+       
+    }
+
+    public function getVideosByGenre($genreid)
+    {
+        //
+        $data = Video::where('playlistid', $genreid)->where('type','genre')->get();
+        $name = Genre::where('id', $genreid)->first();
+        // dd($data);
+
+       
+        $respons['name']=$name->name;
+        $respons['data']=$data;
+
+        return json_encode($respons);
        
     }
 
@@ -55,14 +85,28 @@ class ApiController extends Controller
        
     }
 
-    public function getArtistbyCountry($id)
+    public function getAllGenre()
     {
         //
-        $data = Artist::where('country', $id)->get();
+        $data = Genre::all();
         // dd($data);
 
 
         return $data->toJson(JSON_PRETTY_PRINT);
+       
+    }
+
+    public function getArtistbyCountry($id)
+    {
+        //
+        $data = Artist::where('country', $id)->get();
+
+
+       
+        $respons['country']=$id;
+        $respons['data']=$data;
+
+        return json_encode($respons);
        
     }
     /**
