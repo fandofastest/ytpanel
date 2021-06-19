@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Artist;
+use App\Country;
 use App\Genre;
 use App\Playlist;
 use App\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
 
 class ApiController extends Controller
 {
@@ -89,6 +92,8 @@ class ApiController extends Controller
     {
         //
         $data = Genre::all();
+
+        
         // dd($data);
 
 
@@ -108,6 +113,28 @@ class ApiController extends Controller
 
         return json_encode($respons);
        
+    }
+
+    public function getAllCountry(){
+        $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
+        $url='https://youtube.googleapis.com/youtube/v3P/i18nRegions?part=snippet&key='.$api;
+        // dd($url);        
+        $response = Http::get($url);
+        $responseBody = json_decode($response->getBody());
+         $list=[];   
+        foreach ($responseBody->items as $datas) {
+            $country= new Country();
+            $country->id=$datas->id;
+            $country->name=$datas->snippet->name;
+            $country->thumbnail=url('/thumbnail/country/').'/'.$datas->id.'.jpg';
+            array_push($list, $country);
+
+            # code...
+        }
+
+        return json_encode($list);
+
+
     }
     /**
      * Show the form for creating a new resource.
