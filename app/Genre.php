@@ -11,4 +11,9 @@ class Genre extends Model
         'name',
         'thumbnail',
     ];
+
+    public function getThumbnailAttribute($value)
+    {
+        return url('/thumbnail/').'/'.$value;
+    }
 }
