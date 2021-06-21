@@ -117,7 +117,7 @@ class ApiController extends Controller
 
     public function getAllCountry(){
         $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
-        $url='https://youtube.googleapis.com/youtube/v3P/i18nRegions?part=snippet&key='.$api;
+        $url='https://youtube.googleapis.com/youtube/v3/i18nRegions?part=snippet&key='.$api;
         // dd($url);        
         $response = Http::get($url);
         $responseBody = json_decode($response->getBody());
