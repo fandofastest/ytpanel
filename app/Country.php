@@ -8,7 +8,7 @@ class Country extends Model
 {
     //
     protected $fillable = [
-        'id',
+        'countryid',
         'thumbnail',
         'name'
     ];
