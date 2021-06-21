@@ -72,7 +72,9 @@ class ApiController extends Controller
         // dd($data);
 
 
-        return $data->toJson(JSON_PRETTY_PRINT);
+        $respons['data']=$data;
+
+        return json_encode($respons);
        
     }
 
@@ -84,7 +86,9 @@ class ApiController extends Controller
         // dd($data);
 
 
-        return $data->toJson(JSON_PRETTY_PRINT);
+        $respons['data']=$data;
+
+        return json_encode($respons);
        
     }
 
@@ -96,8 +100,9 @@ class ApiController extends Controller
         
         // dd($data);
 
+        $respons['data']=$data;
 
-        return $data->toJson(JSON_PRETTY_PRINT);
+        return json_encode($respons);
        
     }
 
@@ -121,13 +126,15 @@ class ApiController extends Controller
         // dd($url);        
         $response = Http::get($url);
         $responseBody = json_decode($response->getBody());
-         $list=[];   
+        $list['country']=[];   
         foreach ($responseBody->items as $datas) {
             $country= new Country();
-            $country->id=$datas->id;
+        
+            $country->countryid=$datas->id;
+            // dd($country->countryid);
             $country->name=$datas->snippet->name;
             $country->thumbnail=url('/thumbnail/country/').'/'.$datas->id.'.jpg';
-            array_push($list, $country);
+            array_push($list['country'], $country);
 
             # code...
         }
