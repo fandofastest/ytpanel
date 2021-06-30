@@ -31,9 +31,9 @@ class ArtistController extends Controller
         //
         $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
         $url='https://youtube.googleapis.com/youtube/v3/i18nRegions?part=snippet&key='.$api;
-        // dd($url);        
+        // dd($url);
         $response = Http::get($url);
-        $responseBody = json_decode($response->getBody());             
+        $responseBody = json_decode($response->getBody());
         return view('pages.artist_add',['data' => $responseBody]);
 
     }
@@ -50,11 +50,11 @@ class ArtistController extends Controller
         $id=$request->channelid;
         $url='https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id='.$id.'&key='.$api;
         $response = Http::get($url);
-        $responseBody = json_decode($response->getBody());         
+        $responseBody = json_decode($response->getBody());
         // $playlist = Artist::create($request->all());
-        // dd($responseBody);        
+        // dd($responseBody);
 
-         $artist= new Artist(); 
+         $artist= new Artist();
         foreach ($responseBody->items as $data) {
                $artist->channelid=$data->id;
                $artist->country=$request->country;

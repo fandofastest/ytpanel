@@ -33,8 +33,8 @@ class ApiController extends Controller
 
         return json_encode($respons);
     }
-    
-    
+
+
     public function getVideosByPlaylist($playlistid)
     {
         //
@@ -42,12 +42,12 @@ class ApiController extends Controller
         $name = Playlist::where('id', $playlistid)->first();
         // dd($data);
 
-       
+
         $respons['name']=$name->name;
         $respons['data']=$data;
 
         return json_encode($respons);
-       
+
     }
 
     public function getVideosByGenre($genreid)
@@ -57,12 +57,12 @@ class ApiController extends Controller
         $name = Genre::where('id', $genreid)->first();
         // dd($data);
 
-       
+
         $respons['name']=$name->name;
         $respons['data']=$data;
 
         return json_encode($respons);
-       
+
     }
 
     public function getAllPlaylist()
@@ -75,7 +75,7 @@ class ApiController extends Controller
         $respons['data']=$data;
 
         return json_encode($respons);
-       
+
     }
 
 
@@ -89,7 +89,7 @@ class ApiController extends Controller
         $respons['data']=$data;
 
         return json_encode($respons);
-       
+
     }
 
     public function getAllGenre()
@@ -97,13 +97,13 @@ class ApiController extends Controller
         //
         $data = Genre::all();
 
-        
+
         // dd($data);
 
         $respons['data']=$data;
 
         return json_encode($respons);
-       
+
     }
 
     public function getArtistbyCountry($id)
@@ -112,24 +112,24 @@ class ApiController extends Controller
         $data = Artist::where('country', $id)->get();
 
 
-       
+
         $respons['country']=$id;
         $respons['data']=$data;
 
         return json_encode($respons);
-       
+
     }
 
     public function getAllCountry(){
         $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
         $url='https://youtube.googleapis.com/youtube/v3/i18nRegions?part=snippet&key='.$api;
-        // dd($url);        
+        // dd($url);
         $response = Http::get($url);
         $responseBody = json_decode($response->getBody());
-        $list['country']=[];   
+        $list['country']=[];
         foreach ($responseBody->items as $datas) {
             $country= new Country();
-        
+
             $country->countryid=$datas->id;
             // dd($country->countryid);
             $country->name=$datas->snippet->name;
@@ -148,6 +148,13 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function search($q){
+
+        $data = Artist::where('name', $q)->orWhere('name', 'like', '%' . $q . '%')->get();
+        dd($data);
+
+    }
     public function create()
     {
         //
