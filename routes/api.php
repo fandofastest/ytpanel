@@ -23,6 +23,8 @@ Route::get('artistcountry/{id}', 'ApiController@getArtistbyCountry')->name('api.
 Route::get('genre/', 'ApiController@getAllGenre')->name('api.genre');
 Route::get('genre/{id}', 'ApiController@getVideosByGenre')->name('api.genredetail');
 Route::get('getallcountry/', 'ApiController@getAllCountry')->name('api.getallcountry');
-Route::get('search/{q}', 'ApiController@search')->name('api.getsearch');
+Route::get('searchartist/{q}', 'ApiController@searchArtist')->name('api.getsearch');
+Route::get('searchchannel/{q}', 'ApiController@SearchByChannel')->name('api.searchchannel');
+Route::get('searchvideo/{q}', 'ApiController@SearchVideo')->name('api.searchvideo');
 
 

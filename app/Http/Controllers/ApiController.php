@@ -149,18 +149,95 @@ class ApiController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function search($q){
+    public function searchArtist($q){
         $list['data']=[];
         $data = Artist::where('name', $q)->orWhere('name', 'like', '%' . $q . '%')->get();
         array_push($list['data'], $data);
-
-
-
         // dd($data);
         return json_encode($list);
 
 
     }
+
+    public function getDurationByVideoId($videoid){     
+        $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
+        $url='https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&key='.$api.'&id='.$videoid;
+
+        $response = Http::get($url);
+        $responseBody = json_decode($response->getBody());
+        foreach ($responseBody->items as $datas) {
+
+           
+            $video= new Video();             
+            $video->videoid=$datas->id;
+            $video->title=$datas->snippet->title;
+            $video->description=$datas->snippet->description;
+            $video->duration=$datas->contentDetails->duration;
+            $video->views=$datas->statistics->viewCount;
+            $video->channelname=$datas->snippet->channelTitle;
+
+        }
+
+
+        return $video;
+        
+
+
+
+    }
+
+    public function SearchByChannel($channelid){
+
+        $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
+        $url='https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&key='.$api.'&channelId='.$channelid;
+        // dd($url); 
+        $response = Http::get($url);
+        $responseBody = json_decode($response->getBody());
+        $list['channel']=[];
+        foreach ($responseBody->items as $datas) {
+          
+            if ($datas->id->kind=='youtube#video') {
+                # code...
+                $video=$this->getDurationByVideoId($datas->id->videoId);
+                // dd($responseBody);
+                array_push($list['channel'], $video);
+            }
+           
+
+            # code...
+        }
+
+        return json_encode($list);
+    }
+
+
+    public function SearchVideo($q){
+
+        $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
+        $url='https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&key='.$api.'&q='.$q;
+        // dd($url); 
+        $response = Http::get($url);
+        $responseBody = json_decode($response->getBody());
+        $list['result']=[];
+        foreach ($responseBody->items as $datas) {
+          
+            if ($datas->id->kind=='youtube#video') {
+                # code...
+                $video=$this->getDurationByVideoId($datas->id->videoId);
+                // dd($responseBody);
+                array_push($list['result'], $video);
+            }
+           
+
+            # code...
+        }
+
+        return json_encode($list);
+    }
+
+
+
+
     public function create()
     {
         //
