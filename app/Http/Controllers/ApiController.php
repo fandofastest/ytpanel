@@ -150,9 +150,8 @@ class ApiController extends Controller
      */
 
     public function searchArtist($q){
-        $list['data']=[];
         $data = Artist::where('name', $q)->orWhere('name', 'like', '%' . $q . '%')->get();
-        array_push($list['data'], $data);
+        $list['data']=$data;
         // dd($data);
         return json_encode($list);
 
