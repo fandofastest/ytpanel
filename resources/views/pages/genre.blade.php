@@ -50,7 +50,7 @@
                     {{$datas->name}}
                     </td>
                     <td>
-                    <img src=" {{url('/thumbnail/').'/'.$datas->thumbnail}}" alt="blank" width="150" height="150">
+                    <img src=" {{$datas->thumbnail}}" alt="blank" width="150" height="150">
                     </td>
                     <td>
                     {{$datas->created_at}}
