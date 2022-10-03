@@ -6,6 +6,7 @@ use App\Artist;
 use App\Country;
 use App\Genre;
 use App\Playlist;
+use App\User;
 use App\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -121,7 +122,8 @@ class ApiController extends Controller
     }
 
     public function getAllCountry(){
-        $api=auth()->user()->apikey;
+        $api=User::first()->apikey;
+        // dd($api);
         $url='https://youtube.googleapis.com/youtube/v3/i18nRegions?part=snippet&key='.$api;
         // dd($url);
         $response = Http::get($url);
@@ -159,7 +161,7 @@ class ApiController extends Controller
     }
 
     public function getDurationByVideoId($videoid){
-        $api=auth()->user()->apikey;
+        $api=User::first()->apikey;
         $url='https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&key='.$api.'&id='.$videoid;
 
         $response = Http::get($url);
@@ -187,7 +189,7 @@ class ApiController extends Controller
 
     public function SearchByChannel($channelid){
 
-        $api=auth()->user()->apikey;
+        $api=User::first()->apikey;
         $url='https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&key='.$api.'&channelId='.$channelid;
         // dd($url);
         $response = Http::get($url);
@@ -212,7 +214,7 @@ class ApiController extends Controller
 
     public function SearchVideo($q){
 
-        $api=auth()->user()->apikey;
+        $api=User::first()->apikey;
         $url='https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&key='.$api.'&q='.$q;
         // dd($url);
         $response = Http::get($url);
