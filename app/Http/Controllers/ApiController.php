@@ -121,7 +121,7 @@ class ApiController extends Controller
     }
 
     public function getAllCountry(){
-        $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
+        $api=auth()->user()->apikey;
         $url='https://youtube.googleapis.com/youtube/v3/i18nRegions?part=snippet&key='.$api;
         // dd($url);
         $response = Http::get($url);
@@ -158,16 +158,16 @@ class ApiController extends Controller
 
     }
 
-    public function getDurationByVideoId($videoid){     
-        $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
+    public function getDurationByVideoId($videoid){
+        $api=auth()->user()->apikey;
         $url='https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&key='.$api.'&id='.$videoid;
 
         $response = Http::get($url);
         $responseBody = json_decode($response->getBody());
         foreach ($responseBody->items as $datas) {
 
-           
-            $video= new Video();             
+
+            $video= new Video();
             $video->videoid=$datas->id;
             $video->title=$datas->snippet->title;
             $video->description=$datas->snippet->description;
@@ -179,7 +179,7 @@ class ApiController extends Controller
 
 
         return $video;
-        
+
 
 
 
@@ -187,21 +187,21 @@ class ApiController extends Controller
 
     public function SearchByChannel($channelid){
 
-        $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
+        $api=auth()->user()->apikey;
         $url='https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&key='.$api.'&channelId='.$channelid;
-        // dd($url); 
+        // dd($url);
         $response = Http::get($url);
         $responseBody = json_decode($response->getBody());
         $list['channel']=[];
         foreach ($responseBody->items as $datas) {
-          
+
             if ($datas->id->kind=='youtube#video') {
                 # code...
                 $video=$this->getDurationByVideoId($datas->id->videoId);
                 // dd($responseBody);
                 array_push($list['channel'], $video);
             }
-           
+
 
             # code...
         }
@@ -212,21 +212,21 @@ class ApiController extends Controller
 
     public function SearchVideo($q){
 
-        $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
+        $api=auth()->user()->apikey;
         $url='https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&key='.$api.'&q='.$q;
-        // dd($url); 
+        // dd($url);
         $response = Http::get($url);
         $responseBody = json_decode($response->getBody());
         $list['result']=[];
         foreach ($responseBody->items as $datas) {
-          
+
             if ($datas->id->kind=='youtube#video') {
                 # code...
                 $video=$this->getDurationByVideoId($datas->id->videoId);
                 // dd($responseBody);
                 array_push($list['result'], $video);
             }
-           
+
 
             # code...
         }

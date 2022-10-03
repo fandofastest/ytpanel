@@ -49,6 +49,17 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                    <label class="col-sm-2 col-form-label">{{ __('Api_key') }}</label>
+                    <div class="col-sm-7">
+                      <div class="form-group{{ $errors->has('apikey') ? ' has-danger' : '' }}">
+                        <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="apikey" id="input-email" type="text" placeholder="{{ __('Api key') }}" value="{{ old('apikey', auth()->user()->apikey) }}" required />
+                        @if ($errors->has('apikey'))
+                          <span id="email-error" class="error text-danger" for="input-email">{{ $errors->first('apikey') }}</span>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
               </div>
               <div class="card-footer ml-auto mr-auto">
                 <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
