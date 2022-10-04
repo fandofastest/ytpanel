@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\User;
 
 use App\Video;
 use Illuminate\Http\Request;
@@ -20,31 +21,31 @@ class VideoController extends Controller
 
     function covtime($youtube_time) {
         preg_match_all('/(\d+)/',$youtube_time,$parts);
-    
+
         // Put in zeros if we have less than 3 numbers.
         if (count($parts[0]) == 1) {
             array_unshift($parts[0], "0", "0");
         } elseif (count($parts[0]) == 2) {
             array_unshift($parts[0], "0");
         }
-    
+
         $sec_init = $parts[0][2];
         $seconds = $sec_init%60;
         $seconds_overflow = floor($sec_init/60);
-    
+
         $min_init = $parts[0][1] + $seconds_overflow;
         $minutes = ($min_init)%60;
         $minutes_overflow = floor(($min_init)/60);
-    
+
         $hours = $parts[0][0] + $minutes_overflow;
-    
+
         if($hours != 0){
             if ($seconds<10) {
                 $seconds='0'.$seconds;
                 # code...
             }
             return $minutes.':'.$seconds;
-        }     
+        }
         else {
             if ($seconds<10) {
                 $seconds='0'.$seconds;
@@ -54,7 +55,7 @@ class VideoController extends Controller
 
         }
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -73,8 +74,8 @@ class VideoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-        $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
+    {
+        $api=User::first()->apikey;
         $url='https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id='.$request->videoid.'&key='.$api;
         // dd($url);
         $response = Http::get($url);
@@ -82,22 +83,22 @@ class VideoController extends Controller
         $video = new Video();
         $video->type=$request->type;
 
-        //  dd($responseBody->items);       
+        //  dd($responseBody->items);
 
          foreach ($responseBody->items as $data) {
             // dd($data->snippet->title);
-            $video->title=$data->snippet->title;    
-            $video->description=$data->snippet->description;    
-            $video->views=$data->statistics->viewCount;    
-            $video->channelname=$data->snippet->channelTitle;    
-            $video->duration=$this->covtime($data->contentDetails->duration);;    
+            $video->title=$data->snippet->title;
+            $video->description=$data->snippet->description;
+            $video->views=$data->statistics->viewCount;
+            $video->channelname=$data->snippet->channelTitle;
+            $video->duration=$this->covtime($data->contentDetails->duration);;
 
              # code...
          }
-        $video->videoid=$request->videoid;    
-        $video->playlistid=$request->playlistid;    
+        $video->videoid=$request->videoid;
+        $video->playlistid=$request->playlistid;
 
-        $video->save();   
+        $video->save();
 
 
 
@@ -158,11 +159,11 @@ class VideoController extends Controller
     public function destroy($id)
     {
 
-    
-            $post = Video::find($id); 
+
+            $post = Video::find($id);
             $post->delete();
 
           return  redirect()->back();
-        
+
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\User;
 
 use App\Artist;
 use Illuminate\Support\Facades\Http;
@@ -29,7 +30,7 @@ class ArtistController extends Controller
     public function add()
     {
         //
-        $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
+        $api=User::first()->apikey;
         $url='https://youtube.googleapis.com/youtube/v3/i18nRegions?part=snippet&key='.$api;
         // dd($url);
         $response = Http::get($url);
@@ -46,7 +47,7 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
-        $api='AIzaSyAgX-SRZsa_ed__aLBix07h4oxgwQXoqPU';
+        $api=User::first()->apikey;
         $id=$request->channelid;
         $url='https://youtube.googleapis.com/youtube/v3/channels?part=snippet&id='.$id.'&key='.$api;
         $response = Http::get($url);
